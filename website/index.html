@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>kvcached — Virtualized Elastic KV Cache</title>
+<title>KVCached — Virtualized Elastic KV Cache</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -107,7 +107,7 @@ footer .links a:hover{color:var(--tx)}
 <nav>
 <div class="nav-inner">
   <a class="nav-logo" href="#">
-    <img src="../assets/logo-v2.svg" alt="kvcached">
+    <img src="assets/logo-v2.svg" alt="kvcached">
   </a>
   <div class="nav-links">
     <a href="#how">How it works</a>
@@ -139,7 +139,7 @@ footer .links a:hover{color:var(--tx)}
 
 <section class="section" style="padding-top:24px">
   <div class="figure-block">
-    <img src="../assets/ads.jpg" alt="Before: 3 GPUs each running one model. After: all 3 models on 1 GPU with kvcached, saving ~70% cost.">
+    <img src="assets/ads.jpg" alt="Before: 3 GPUs each running one model. After: all 3 models on 1 GPU with kvcached, saving ~70% cost.">
     <p class="figure-caption">kvcached enables multiple LLMs to share a single GPU elastically, eliminating rigid per-model memory partitioning.</p>
   </div>
 </section>
@@ -199,28 +199,28 @@ footer .links a:hover{color:var(--tx)}
   <p class="section-desc">From multi-model serving to serverless inference, kvcached adapts GPU memory to your workload.</p>
   <div class="uc-grid">
     <div class="uc-card">
-      <img src="../assets/uc-multillm.svg" alt="Multi-LLM serving">
+      <img src="assets/uc-multillm.svg" alt="Multi-LLM serving">
       <div>
         <h3>Multi-LLM serving</h3>
         <p>Multiple LLMs share a GPU's memory elastically, enabling concurrent deployment without rigid partitioning.</p>
       </div>
     </div>
     <div class="uc-card">
-      <img src="../assets/uc-serverless.svg" alt="Serverless LLM">
+      <img src="assets/uc-serverless.svg" alt="Serverless LLM">
       <div>
         <h3>Serverless LLM</h3>
         <p>Allocate KV cache only when needed. Models spin up and down on demand with minimal cold-start overhead.</p>
       </div>
     </div>
     <div class="uc-card">
-      <img src="../assets/uc-compound.svg" alt="Compound AI systems">
+      <img src="assets/uc-compound.svg" alt="Compound AI systems">
       <div>
         <h3>Compound AI systems</h3>
         <p>Elastic memory across specialized models in a pipeline: retrieval, reasoning, and summarization on limited hardware.</p>
       </div>
     </div>
     <div class="uc-card">
-      <img src="../assets/uc-colocate.svg" alt="GPU workload colocation">
+      <img src="assets/uc-colocate.svg" alt="GPU workload colocation">
       <div>
         <h3>Workload colocation</h3>
         <p>LLM inference coexists with training, fine-tuning, or vision model workloads on the same GPU.</p>
@@ -237,11 +237,11 @@ footer .links a:hover{color:var(--tx)}
   <p class="section-desc">Benchmarked with 3&times; Llama-3.1-8B on A100-80G under intermittent peak workloads. kvcached dynamically shares memory instead of static reservation.</p>
   <div class="bench-grid">
     <div class="bench-card">
-      <img src="../assets/ttft_results/ttft_mean.svg" alt="TTFT mean benchmark results">
+      <img src="assets/ttft_mean.svg" alt="TTFT mean benchmark results">
       <div class="bench-label">TTFT mean latency comparison</div>
     </div>
     <div class="bench-card">
-      <img src="../assets/ttft_results/ttft_p99.svg" alt="TTFT p99 benchmark results">
+      <img src="assets/ttft_p99.svg" alt="TTFT p99 benchmark results">
       <div class="bench-label">TTFT p99 tail latency comparison</div>
     </div>
   </div>
