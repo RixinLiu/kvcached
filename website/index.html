@@ -69,12 +69,16 @@ nav{position:sticky;top:0;z-index:100;background:rgba(255,255,255,0.85);backdrop
 .bench-card img{width:100%;height:auto;display:block}
 .bench-card .bench-label{padding:12px 16px;font-size:13px;color:var(--tx2);border-top:1px solid var(--bd)}
 
-.papers-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.paper-card{background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:20px;transition:border-color 0.15s;text-decoration:none;color:inherit}
-.paper-card:hover{border-color:var(--bd2)}
-.paper-tag{font-size:11px;font-weight:500;color:#a32d2d;margin-bottom:8px;display:flex;align-items:center;gap:4px}
-.paper-card h3{font-size:14px;font-weight:500;line-height:1.4;margin-bottom:6px}
-.paper-card p{font-size:12px;color:var(--tx3)}
+.papers-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.paper-card{position:relative;background:var(--bg);border:1px solid var(--bd);border-radius:16px;padding:34px 32px;transition:transform .2s ease,border-color .2s ease,box-shadow .2s ease;text-decoration:none;color:inherit;display:flex;flex-direction:column;overflow:hidden}
+.paper-card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:linear-gradient(var(--accent),var(--blue))}
+.paper-card:hover{border-color:var(--bd2);transform:translateY(-4px);box-shadow:0 16px 36px rgba(0,0,0,0.08)}
+.paper-tag{font-size:12px;font-weight:600;color:#a32d2d;margin-bottom:16px;display:inline-flex;align-items:center;gap:6px;background:#fcebeb;padding:5px 12px;border-radius:99px;align-self:flex-start}
+.paper-card h3{font-size:20px;font-weight:600;line-height:1.35;margin-bottom:12px;letter-spacing:-0.015em;color:var(--tx)}
+.paper-card p{font-size:13px;color:var(--tx3);line-height:1.5}
+.paper-link{margin-top:18px;font-size:13px;font-weight:600;color:var(--accent);display:inline-flex;align-items:center;gap:6px}
+.paper-link span{transition:transform .2s ease}
+.paper-card:hover .paper-link span{transform:translateX(4px)}
 
 .feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .feat-card{background:var(--bg2);border-radius:10px;padding:20px}
@@ -251,17 +255,20 @@ footer .links a:hover{color:var(--tx)}
 
 <section class="section" id="papers">
   <p class="section-label">Research</p>
-  <h2 class="section-title">Papers</h2>
-  <div class="papers-grid" style="margin-top:24px">
-    <a class="paper-card" href="https://arxiv.org/abs/2508.08448">
-      <div class="paper-tag">&#x1F4C4; arXiv 2508.08448</div>
-      <h3>Towards efficient and practical GPU multitasking in the era of LLM</h3>
-      <p>Xing, Qiao, Mo, Cui, Sela, Zhou, Gonzalez, Stoica</p>
-    </a>
+  <h2 class="section-title">Backed by research</h2>
+  <p class="section-desc">kvcached builds on peer-reviewed work in GPU sharing and multi-LLM serving.</p>
+  <div class="papers-grid">
     <a class="paper-card" href="https://arxiv.org/abs/2505.04021">
       <div class="paper-tag">&#x1F4C4; arXiv 2505.04021</div>
       <h3>Prism: unleashing GPU sharing for cost-efficient multi-LLM serving</h3>
       <p>Yu, Xing, Qiao, Ma, Li, Wang, Yang, Xie, Cao, Bao et al.</p>
+      <span class="paper-link">Read paper <span>&rarr;</span></span>
+    </a>
+    <a class="paper-card" href="https://arxiv.org/abs/2508.08448">
+      <div class="paper-tag">&#x1F4C4; arXiv 2508.08448</div>
+      <h3>Towards efficient and practical GPU multitasking in the era of LLM</h3>
+      <p>Xing, Qiao, Mo, Cui, Sela, Zhou, Gonzalez, Stoica</p>
+      <span class="paper-link">Read paper <span>&rarr;</span></span>
     </a>
   </div>
 </section>
@@ -279,10 +286,17 @@ pip install kvcached --no-build-isolation
 <span class="kw">export</span> ENABLE_KVCACHED=true
 <span class="kw">export</span> KVCACHED_AUTOPATCH=1
 
-<span class="cm"># Launch your engine as usual (SGLang example)</span>
-python -m sglang.launch_server \
-  --model meta-llama/Llama-3.1-8B-Instruct \
-  --disable-radix-cache --port 30000
+<span class="cm"># Launch your engine as usual — no code changes needed</span>
+
+<span class="cm"># For SGLang</span>
+python -m sglang.launch_server --model meta-llama/Llama-3.2-1B-Instruct --port 30000
+python -m sglang.bench_serving --backend sglang-oai --model meta-llama/Llama-3.2-1B-Instruct \
+  --dataset-name sharegpt --request-rate 10 --num-prompts 1000 --port 30000
+
+<span class="cm"># For vLLM</span>
+vllm serve meta-llama/Llama-3.2-1B-Instruct --port=12346
+vllm bench serve --model meta-llama/Llama-3.2-1B-Instruct \
+  --request-rate 10 --num-prompts 1000 --port 12346
 
 <span class="cm"># Or with Docker</span>
 docker pull ghcr.io/ovg-project/kvcached-sglang:latest
@@ -301,7 +315,7 @@ docker pull ghcr.io/ovg-project/kvcached-vllm:latest</pre>
 
 <footer>
 <div class="inner">
-  <p>Apache 2.0 &middot; Rice University &middot; UC Berkeley</p>
+  <p>Apache 2.0</p>
   <div class="links">
     <a href="https://github.com/ovg-project/kvcached">GitHub</a>
     <a href="https://deepwiki.com/ovg-project/kvcached">Docs</a>
